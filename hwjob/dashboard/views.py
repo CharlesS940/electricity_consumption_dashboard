@@ -1,8 +1,16 @@
 from django.shortcuts import render
+from dashboard.models import Consumption
 
 
 def consumption_view(request, client_id):
-    return render(request, "dashboard/consumption_detail.html")
+    """
+    Retrieving the last 12 months of consumption for a client
+    """
+    queryset = Consumption.objects.filter(client__id=client_id).order_by("-year", "-month")[:12]
+    consumptions = list(reversed(queryset))
+    context = {
+        "consumptions": consumptions,}
+    return render(request, "dashboard/consumption_detail.html", context)
 
 
 def search_client_view(request):

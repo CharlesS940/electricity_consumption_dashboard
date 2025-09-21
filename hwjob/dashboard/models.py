@@ -16,6 +16,7 @@ class MonthMixin(models.Model):
 class Client(models.Model):
     full_name = models.CharField("full name", max_length=50)
     has_elec_heating = models.BooleanField("has electric heating", default=None, null=True)
+    has_recent_anomaly = models.BooleanField("has anomaly", default=None, null=True)
 
     def __str__(self):
         return f"Client {self.pk}"

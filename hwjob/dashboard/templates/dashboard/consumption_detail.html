@@ -1,0 +1,72 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+{% endblock %}
+
+{% block body %}
+<main class="consumption-detail-container">
+    <h1>12-Month Consumption</h1>
+    <div class="dashboard-flex">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Month</th>
+                        <th>Consumption</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in consumptions %}
+                    <tr>
+                        <td>{{ c.year }}</td>
+                        <td>{{ c.month }}</td>
+                        <td>{{ c.kwh_consumed }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="chart-container">
+            <h2>Consumption Chart</h2>
+            <canvas id="consumptionChart" width="400" height="300"></canvas>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block script %}
+    <!-- Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Prepare data for the chart
+        const labels = [{% for c in consumptions %}'{{ c.month }} / {{ c.year }}'{% if not forloop.last %}, {% endif %}{% endfor %}];
+        const data = [{% for c in consumptions %}{{ c.kwh_consumed|floatformat:"2" }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+        console.log(labels);
+        console.log(data);
+
+        const ctx = document.getElementById('consumptionChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Consumption',
+                    data: data,
+                    borderColor: 'blue',
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: 'Month' } },
+                    y: { title: { display: true, text: 'Consumption' } }
+                }
+            }
+        });
+    </script>
+{% endblock %}

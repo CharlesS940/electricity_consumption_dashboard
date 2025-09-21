@@ -88,3 +88,53 @@ a:hover svg {
         display: inline;
     }
 }
+
+.dashboard-flex {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.table-container {
+    flex: 1 1 100px;
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.chart-container {
+    flex: 1 1 400px;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+th, td {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background: #f0f0f0;
+    font-weight: bold;
+}
+
+@media (max-width: 900px) {
+    .dashboard-flex {
+        flex-direction: column;
+    }
+    .chart-container, .table-container {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}

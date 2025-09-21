@@ -33,7 +33,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {% if not client.has_anomaly %}
+                                {% if not client.has_recent_anomaly %}
                                     <i class="icon fill-green" data-eva="checkmark-circle-2-outline"></i>
                                 {% else %}
                                     <i class="icon fill-red" data-eva="close-circle-outline"></i>

@@ -17,6 +17,7 @@
                         <th>Year</th>
                         <th>Month</th>
                         <th>Consumption</th>
+                        <th>Anomaly</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,13 +26,20 @@
                         <td>{{ c.year }}</td>
                         <td>{{ c.month }}</td>
                         <td>{{ c.kwh_consumed }}</td>
+                        <td>
+                            {% if c.has_anomaly %}
+                                <span style="color: red;">Anomaly</span>
+                            {% else %}
+                                <span style="color: green;">Normal</span>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <p>
                 Electric heating:
-                {% if electric_heating %}
+                {% if has_electric_heating %}
                     <span style="color: green;">Yes</span>
                 {% else %}
                     <span style="color: red;">No</span>

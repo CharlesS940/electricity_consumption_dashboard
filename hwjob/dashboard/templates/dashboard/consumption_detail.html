@@ -29,6 +29,14 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <p>
+                Electric heating:
+                {% if electric_heating %}
+                    <span style="color: green;">Yes</span>
+                {% else %}
+                    <span style="color: red;">No</span>
+                {% endif %}
+            </p>
         </div>
         <div class="chart-container">
             <h2>Consumption Chart</h2>

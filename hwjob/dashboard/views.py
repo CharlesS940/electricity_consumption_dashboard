@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.db.models import Q
 from dashboard.models import Consumption, Client
 from dashboard.utils import has_electric_heating, find_anomalies
 
@@ -25,12 +26,22 @@ def consumption_view(request, client_id):
     }
     return render(request, "dashboard/consumption_detail.html", context)
 
-
 def search_client_view(request):
     """
-    A list of clients
-
-    TODO client.has_elec_heating should be set
-    TODO client.has_anomaly should be set
+    Search for clients by full name or client number.
     """
-    return render(request, "dashboard/search_client.html")
+    query = request.GET.get("q", "").strip()
+    clients = []
+    if query:
+        # Search by client number or by name (case-insensitive, partial match)
+        clients = Client.objects.filter(
+            Q(pk__iexact=query) | Q(full_name__icontains=query)
+        )
+        if clients.count() == 1:
+            # Redirect to the detail page if exactly one match
+            return redirect("dashboard:consumption_details", client_id=clients.first().pk)
+    context = {
+        "clients": clients,
+        "query": query,
+    }
+    return render(request, "dashboard/search_client.html", context)

@@ -11,11 +11,31 @@
         <nav class="search-client">
             <img class="logo" alt="Joole logo" src="{% static 'dashboard/img/joole.png' %}" />
             <div class="search-input-container">
-                <label for="search-client">Numéro client ou nom</label>
-                <div class="search-input">
-                    <input id="search-client" />
-                    <a id="search-client-link" href=""><i class="icon fill-gray" data-eva="search"></i></a>
-                </div>
+                <form method="get" action="{% url 'dashboard:search_client' %}">
+                    <label for="search-client">Numéro client ou nom</label>
+                    <div class="search-input">
+                        <input id="search-client" name="q" value="{{ query|default:'' }}" />
+                        <button type="submit"><i class="icon fill-gray" data-eva="search"></i></button>
+                    </div>
+                </form>
+                {% if query %}
+                    <section class="search-results">
+                        {% if clients %}
+                            <h2>Résultats pour "{{ query }}" :</h2>
+                            <ul>
+                                {% for client in clients %}
+                                    <li>
+                                        <a href="{% url 'dashboard:consumption_details' client_id=client.pk %}">
+                                            {{ client.full_name }} (ID: {{ client.pk }})
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Aucun client trouvé pour "{{ query }}".</p>
+                        {% endif %}
+                    </section>
+                {% endif %}
             </div>
         </nav>
     </main>

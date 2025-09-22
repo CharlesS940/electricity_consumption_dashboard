@@ -1,17 +1,17 @@
 from django.test import Client as DjClient
 from django.test import TestCase
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 
 from dashboard.models import Client
 
 
-class DashBoardTestCase(TestCase):
-    fixtures = ["prices", "clients", "consumptions"]
-
-
-class HttpCodeTestCase(DashBoardTestCase):
+class HttpCodeTestCase(TestCase):
     def setUp(self):
         self.djclient = DjClient()
+        User = get_user_model()
+        self.user = User.objects.create_user(username='admin', password='adminpass', is_staff=True)
+        self.djclient.login(username='admin', password='adminpass')
 
     def assertSuccess(self, response, msg_prefix):
         status_code = response.status_code
@@ -30,7 +30,7 @@ class HttpCodeTestCase(DashBoardTestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_clients_list_view(self):
-        path = reverse("dashboard:clients_list")
+        path = "/admin/clients"
         self.assertGet(path)
 
     def test_404_consumption_view(self):

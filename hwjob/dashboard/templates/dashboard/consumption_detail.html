@@ -18,14 +18,14 @@
                         <th>Year</th>
                         <th>Month</th>
                         <th>Consumption (kWh)</th>
-                        <th>Anomaly</th>
+                        <th>Health Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for c in consumptions %}
+                    {% for c in consumptions|slice:"::-1" %}
                     <tr>
                         <td>{{ c.year }}</td>
-                        <td>{{ c.month }}</td>
+                        <td>{{ c.month_name }}</td>
                         <td>{{ c.kwh_consumed }}</td>
                         <td>
                             {% if c.has_anomaly %}
@@ -51,7 +51,7 @@
                     {% for a in anomalies %}
                     <tr>
                         <td>{{ a.year }}</td>
-                        <td>{{ a.month }}</td>
+                        <td>{{ a.month_name }}</td>
                         <td>{{ a.kwh_consumed }}</td>
                     </tr>
                     {% empty %}
@@ -93,9 +93,7 @@
     <script>
         // Prepare data for the chart
         const labels = [{% for c in consumptions %}'{{ c.month }} / {{ c.year }}'{% if not forloop.last %}, {% endif %}{% endfor %}];
-        const data = [{% for c in consumptions %}{{ c.kwh_consumed|floatformat:"2" }}{% if not forloop.last %}, {% endif %}{% endfor %}];
-        console.log(labels);
-        console.log(data);
+        const data = [{% for c in consumptions %}{{ c.kwh_consumed}}{% if not forloop.last %}, {% endif %}{% endfor %}];
 
         const ctx = document.getElementById('consumptionChart').getContext('2d');
         new Chart(ctx, {
@@ -112,8 +110,8 @@
             options: {
                 responsive: true,
                 scales: {
-                    x: { title: { display: true, text: 'Month' } },
-                    y: { title: { display: true, text: 'Consumption' } }
+                    x: { title: { display: true, text: 'Month / Year' , font: { size: 20 }}, ticks: {font: {size: 16}}},
+                    y: { title: { display: true, text: 'Consumption (kWh)', font: { size: 20 } }, ticks: {font: {size: 16}} },
                 }
             }
         });

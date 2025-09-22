@@ -38,6 +38,24 @@ class Consumption(MonthMixin):
         verbose_name_plural = "Consumptions"
         unique_together = ("client", "month", "year")
 
+    @property
+    def month_name(self):
+        month_names = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ]
+        return month_names[self.month - 1]
+
     def __str__(self):
         return f"Conso of {self.client} ({self.month}/{self.year}): {self.kwh_consumed}"
 

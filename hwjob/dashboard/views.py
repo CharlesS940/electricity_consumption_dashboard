@@ -2,12 +2,18 @@ from django.shortcuts import render, redirect
 from django.db.models import Q
 from dashboard.models import Consumption, Client
 from dashboard.utils import has_electric_heating, find_anomalies
+from django.http import Http404
+
 
 
 def consumption_view(request, client_id):
     """
     Retrieving the last 12 months of consumption for a client for display. If the client's electric heating status or anomalies are not set, they are computed and saved.
     """
+    try:
+        client = Client.objects.get(id=client_id)
+    except Client.DoesNotExist:
+        raise Http404("Client does not exist")
     client = Client.objects.get(id=client_id)
     queryset = Consumption.objects.filter(client__id=client_id).order_by("-year", "-month")
     consumptions = list(reversed(queryset[:12]))

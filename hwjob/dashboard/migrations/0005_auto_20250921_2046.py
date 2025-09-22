@@ -15,10 +15,12 @@ class Migration(migrations.Migration):
 
         # Compute period as year * 12 + month
         period = ExpressionWrapper(F('year') * 12 + F('month'), output_field=IntegerField())
-        latest = Consumption.objects.aggregate(max_period=Max(period))['max_period']
-        start = latest - 11  # last 12 months inclusive
         clients_to_update = []
         for client in Client.objects.all():
+            latest = Consumption.objects.filter(client=client.pk).aggregate(max_period=Max(period))['max_period']
+            if latest is None:
+                continue
+            start = latest - 11
             has_recent_anomaly = Consumption.objects.annotate(ym_value=period).filter(
                 client=client.pk,
                 has_anomaly=True,

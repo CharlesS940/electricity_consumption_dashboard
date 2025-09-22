@@ -10,6 +10,25 @@
     <main class="clients-list-container">
         <section>
             <h1 class="main-title">List of clients</h1>
+            <form method="get" class="filters-form" style="margin-bottom: 1.5em; display: flex; gap: 1em">
+                <div>
+                    <label for="electric_heating">Electric heating:</label>
+                    <select name="electric_heating" id="electric_heating">
+                        <option value="">All</option>
+                        <option value="yes" {% if selected_electric_heating == "yes" %}selected{% endif %}>Yes</option>
+                        <option value="no" {% if selected_electric_heating == "no" %}selected{% endif %}>No</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="anomaly_status">Health:</label>
+                    <select name="anomaly_status" id="anomaly_status">
+                        <option value="">All</option>
+                        <option value="normal" {% if selected_anomaly_status == "normal" %}selected{% endif %}>Normal</option>
+                        <option value="recent_anomaly" {% if selected_anomaly_status == "recent_anomaly" %}selected{% endif %}>Recent Anomaly</option>
+                    </select>
+                </div>
+                <button type="submit">Filter</button>
+            </form>
             <table class="clients-list">
                 <thead>
                     <tr>

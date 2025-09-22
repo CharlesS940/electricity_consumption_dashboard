@@ -12,7 +12,7 @@
             <img class="logo" alt="Joole logo" src="{% static 'dashboard/img/joole.png' %}" />
             <div class="search-input-container">
                 <form method="get" action="{% url 'dashboard:search_client' %}">
-                    <label for="search-client">Numéro client ou nom</label>
+                    <label for="search-client">Client ID or name</label>
                     <div class="search-input">
                         <input id="search-client" name="q" value="{{ query|default:'' }}" />
                         <button type="submit"><i class="icon fill-gray" data-eva="search"></i></button>
@@ -21,7 +21,7 @@
                 {% if query %}
                     <section class="search-results">
                         {% if clients %}
-                            <h2>Résultats pour "{{ query }}" :</h2>
+                            <h2>Results for "{{ query }}" :</h2>
                             <ul>
                                 {% for client in clients %}
                                     <li>

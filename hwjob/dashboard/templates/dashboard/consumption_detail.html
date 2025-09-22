@@ -61,14 +61,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-            <p>
-                Electric heating:
-                {% if has_electric_heating %}
-                    <span style="color: green;">Yes</span>
-                {% else %}
-                    <span style="color: red;">No</span>
-                {% endif %}
-            </p>
         </div>
         <div class="chart-container">
             <h2>
@@ -81,6 +73,12 @@
                     {% endif %}
                 </span>
             </h2>
+            <div style="text-align: center; margin-bottom: 1em;">
+                <span style="display:inline-block;width:16px;height:16px;background:red;border-radius:50%;margin-right:4px;vertical-align:middle;"></span>
+                Anomaly
+                <span style="display:inline-block;width:16px;height:16px;background:blue;border-radius:50%;margin-left:16px;margin-right:4px;vertical-align:middle;"></span>
+                Normal
+            </div>
             <canvas id="consumptionChart" width="400" height="300"></canvas>
         </div>
     </div>
@@ -94,6 +92,7 @@
         // Prepare data for the chart
         const labels = [{% for c in consumptions %}'{{ c.month }} / {{ c.year }}'{% if not forloop.last %}, {% endif %}{% endfor %}];
         const data = [{% for c in consumptions %}{{ c.kwh_consumed}}{% if not forloop.last %}, {% endif %}{% endfor %}];
+        const pointColors = [{% for c in consumptions %}{% if c.has_anomaly %}'red'{% else %}'blue'{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}];
 
         const ctx = document.getElementById('consumptionChart').getContext('2d');
         new Chart(ctx, {
@@ -105,14 +104,22 @@
                     data: data,
                     borderColor: 'blue',
                     fill: false,
+                    pointBackgroundColor: pointColors,
+                    pointRadius: 8,
+                    pointBorderWidth: 0,
                 }]
             },
             options: {
                 responsive: true,
                 scales: {
-                    x: { title: { display: true, text: 'Month / Year' , font: { size: 20 }}, ticks: {font: {size: 16}}},
-                    y: { title: { display: true, text: 'Consumption (kWh)', font: { size: 20 } }, ticks: {font: {size: 16}} },
-                }
+                    x: { title: { display: true, text: 'Month / Year' , font: { size: 20 }}, ticks: {font: { size: 16 }}},
+                    y: { title: { display: true, text: 'Consumption (kWh)', font: { size: 20 } }, ticks: {font: { size: 16 }}},
+                },
+                plugins: {
+                    legend: {
+                        display: false // Hide the default legend
+                    }
+                },
             }
         });
     </script>

@@ -9,9 +9,6 @@ from dashboard.models import Client
 class ClientsListView(ListView):
     """
     A list of clients
-
-    TODO client.has_elec_heating should be set
-    TODO client.has_anomaly should be set
     """
 
     queryset = Client.objects.all()

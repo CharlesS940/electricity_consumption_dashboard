@@ -8,7 +8,7 @@
 
 {% block body %}
 <main class="consumption-detail-container">
-    <h1>12-Month Consumption</h1>
+    <h1>Consumption Details for {{ client.full_name }}</h1>
     <div class="dashboard-flex">
         <div class="table-container">
             <h2>kWh Consumption over last 12 months</h2>
@@ -17,7 +17,7 @@
                     <tr>
                         <th>Year</th>
                         <th>Month</th>
-                        <th>Consumption</th>
+                        <th>Consumption (kWh)</th>
                         <th>Anomaly</th>
                     </tr>
                 </thead>
@@ -44,7 +44,7 @@
                     <tr>
                         <th>Year</th>
                         <th>Month</th>
-                        <th>Consumption</th>
+                        <th>Consumption (kWh)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,7 +71,16 @@
             </p>
         </div>
         <div class="chart-container">
-            <h2>Consumption Chart</h2>
+            <h2>
+                Consumption Chart:
+                <span style="vertical-align: middle;">
+                    {% if has_electric_heating %}
+                        Electric Heating <i class="icon fill-yellow" data-eva="flash" style="vertical-align:middle; display:inline;"></i>
+                    {% else %}
+                        No Electric Heating <i class="icon fill-gray" data-eva="flash-off" style="vertical-align:middle; display:inline;"></i>
+                    {% endif %}
+                </span>
+            </h2>
             <canvas id="consumptionChart" width="400" height="300"></canvas>
         </div>
     </div>
@@ -94,7 +103,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Consumption',
+                    label: 'Consumption (kWh)',
                     data: data,
                     borderColor: 'blue',
                     fill: false,

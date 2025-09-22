@@ -23,6 +23,7 @@ def consumption_view(request, client_id):
     anomalies = queryset.filter(has_anomaly=True)
     
     context = {
+        "client": client,
         "consumptions": consumptions,
         "has_electric_heating": client.has_elec_heating,
         "anomalies": anomalies,

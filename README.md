@@ -17,17 +17,22 @@ Pour lancer le serveur Django:
 poetry run python hwjob/manage.py runserver
 ```
 
+Pour accéder à la page admin il faudra créer un superuser:
+```bash
+poetry run python hwjob/manage.py create superuser
+```
+
 ## Migrations et base de données
 
 Une copie de la base de données originale (`db.sqlite3.backup`) est incluse dans le repo pour permettre de tester les migrations:
 Si vous souhaitez appliquer les migrations sur cette base remplacez la db avec le backup:
-    ```bash
-        cp hwjob/db.sqlite3.backup hwjob/db.sqlite3
-    ```
+```bash
+cp hwjob/db.sqlite3.backup hwjob/db.sqlite3
+```
 Et appliquez les migrations:
-    ```bash
-        poetry run python hwjob/manage.py migrate
-    ```
+```bash
+poetry run python hwjob/manage.py migrate
+```
 
 J'explique certains choix et features de l'application ci-dessous:
 

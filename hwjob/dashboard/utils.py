@@ -27,3 +27,17 @@ def find_anomalies(client: Client, consumptions: list[Consumption], threshold=0.
             change = abs(curr - prev)
             consumptions[i].has_anomaly = (change/prev > threshold) & (change > 200)
     return consumptions
+
+def filter_clients(clients: list[Client], electric_heating=None, anomaly_status=None) -> list[Client]:
+    """
+    Filter clients based on electric heating and anomaly status.
+    """
+    if electric_heating == "yes":
+        clients = [c for c in clients if c.has_elec_heating]
+    elif electric_heating == "no":
+        clients = [c for c in clients if c.has_elec_heating is False]
+    if anomaly_status == "normal":
+        clients = [c for c in clients if c.has_recent_anomaly is False]
+    elif anomaly_status == "recent_anomaly":
+        clients = [c for c in clients if c.has_recent_anomaly]
+    return clients

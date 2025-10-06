@@ -14,7 +14,6 @@ def consumption_view(request, client_id):
         client = Client.objects.get(id=client_id)
     except Client.DoesNotExist:
         raise Http404("Client does not exist")
-    client = Client.objects.get(id=client_id)
     queryset = Consumption.objects.filter(client__id=client_id).order_by("-year", "-month")
     consumptions = list(reversed(queryset[:12]))
 

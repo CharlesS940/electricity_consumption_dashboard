@@ -60,10 +60,6 @@ Ce choix permet de mieux refléter l'état actuel du client.
 
 Les instructions originales sont situées ci-dessous:
 
-# Challenge Hello Watt
-
-Vous cherchez un job/stage ? Découvrez [nos offres d'emplois](https://hello-watt.welcomekit.co/).
-
 ## Votre mission
 
 Votre objectif est de mettre en place un dashboard simplifié de diagnostic énergétique.
@@ -109,11 +105,3 @@ Vous êtes libre d'installer d'autres dépendances si besoin,
 que ce soit des dépendances Python (drf, ...),
 javascript (React, Vue, Svelte, ...),
 css (tailwindcss, bootstrap, ...).
-
-## Une fois terminé
-
-Une fois que vous avez terminé, envoyez votre projet à votre correspondant chez Hello Watt.
-
-Envoyez vos résultats :
-- Sous la forme d'un lien Github ou Gitlab vers votre projet. **Attention, votre projet doit être privé**, partagez-le uniquement avec votre correspondant Hello Watt.
-- Par email avec le zip du projet, **ce zip doit contenir l'historique git du projet !** (Veillez à ce que le dossier .git soit présent dans l'archive pour que nous ayons accès à l'historique)
